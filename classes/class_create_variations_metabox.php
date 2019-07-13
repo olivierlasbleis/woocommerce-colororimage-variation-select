@@ -20,7 +20,9 @@ class wcva_add_colored_variation_metabox {
 	   
 	      wp_register_script( 'wcva-meta', ''.wcva_PLUGIN_URL.'js/wcva-meta.js' );
 	      wp_register_script( 'jquery.accordion', ''.wcva_PLUGIN_URL.'js/jquery.accordion.js' );
+	      wp_register_script( 'wcva-iris', ''.wcva_PLUGIN_URL.'js/iris.min.js' );
 	      wp_register_style( 'wcva-meta', ''.wcva_PLUGIN_URL.'css/wcva-meta.css' );
+	      wp_register_style( 'wcva-spectrum', ''.wcva_PLUGIN_URL.'css/spectrum.css' );
 	      wp_register_style( 'jquery.accordion', ''.wcva_PLUGIN_URL.'css/jquery.accordion.css' );
 	      wp_register_style( 'example-styles', ''.wcva_PLUGIN_URL.'css/example-styles.css' );
           $translation_array = array( 
@@ -59,15 +61,14 @@ class wcva_add_colored_variation_metabox {
 	        
 			
             
-			
+			wp_enqueue_script('wcva-iris');
 	        wp_enqueue_script('wcva-meta');
 	        wp_enqueue_script('jquery.accordion');
 	        wp_enqueue_style('wcva-meta');
 	        wp_enqueue_style('jquery.accordion');
 	        wp_enqueue_style('jquery.accordion');
 	        wp_enqueue_style('example-styles');
-	        wp_enqueue_script('wp-color-picker');
-            wp_enqueue_style( 'wp-color-picker' );
+	        
 	        wp_enqueue_media();
 	 
 	        /**

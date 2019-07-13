@@ -102,7 +102,7 @@ class wcva_swatches_widget extends WP_Widget {
 	     <div class="widget-area wcva-filter-widget"> 
 		   <aside class="widget woocommerce widget_layered_nav wcva_layered_nav">
 		    
-            <h3 class="wcva_filter-widget-title"><?php echo $instance['wcva_widget_title']; ?>  <?php echo $instance['filter_attribute']; ?></h3>
+            <h3 class="wcva_filter-widget-title"><?php echo $instance['wcva_widget_title']; ?>  <span class="wcva_layered_widget_attribute_name"><?php echo $instance['filter_attribute']; ?></span></h3>
 		     <?php  $found = $this->wcva_layered_swatches( $terms, $taxonomy,$query_type); ?>
 		   </aside>
 		 </div> 
@@ -222,10 +222,10 @@ class wcva_swatches_widget extends WP_Widget {
         $imageheight       = get_option('woocommerce_shop_swatch_height',"32"); 
 		
 		
-		$swatchtype       = get_woocommerce_term_meta( $term->term_id, 'display_type', true );
-		$swatchcolor      = get_woocommerce_term_meta( $term->term_id, 'color', true );
-		$attrtextblock    = get_woocommerce_term_meta( $term->term_id, 'textblock', true );
-		$swatchimage      = absint( get_woocommerce_term_meta( $term->term_id, 'thumbnail_id', true ) );
+		$swatchtype       = get_term_meta( $term->term_id, 'display_type', true );
+		$swatchcolor      = get_term_meta( $term->term_id, 'color', true );
+		$attrtextblock    = get_term_meta( $term->term_id, 'textblock', true );
+		$swatchimage      = absint( get_term_meta( $term->term_id, 'thumbnail_id', true ) );
 		
 		$swatchimageurl   =  apply_filters('wcva_swatch_image_url',wp_get_attachment_thumb_url($swatchimage),$swatchimage);
 		
@@ -367,7 +367,7 @@ class wcva_swatches_widget extends WP_Widget {
 		
 		<p>
 			<label for="<?php echo $this->get_field_id( 'wcva_widget_title' ); ?>"><?php echo __( 'Title','wcva' ); ?></label>
-			<input class="widefat " id="<?php echo $this->get_field_id( 'wcva_widget_title' ); ?>" name="<?php echo $this->get_field_name( 'wcva_widget_title' ); ?>" type="text" value="<?php echo __( 'Filter by','wcva' ); ?> ">
+			<input class="widefat " id="<?php echo $this->get_field_id( 'wcva_widget_title' ); ?>" name="<?php echo $this->get_field_name( 'wcva_widget_title' ); ?>" type="text" value="<?php if (isset($instance['wcva_widget_title'])) { echo $instance['wcva_widget_title']; } else { echo __( 'Filter by','wcva' ); } ?> ">
 		</p>
 		
 		<p>

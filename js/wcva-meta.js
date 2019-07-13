@@ -81,10 +81,24 @@
 		});
 
 
-        //loads color picker for each color picker input
-        $(".wcvacolordiv").each(function(){
-		     $('.wcvaattributecolorselect').wpColorPicker();
+       $(".wcvacolordiv").each(function(){
+		     $('.wcvaattributecolorselect').iris({
+               hide: true,
+               palettes: true
+             });
+
+             
+             $('.iris-picker').click(function() {
+                $(this).hide();
+             });
+
+             $('.wcvaattributecolorselect').click(function() {
+                $(this).next(".iris-picker").show();
+             });
 		});
+
+
+
         
         //loads Media upload for each media upload input
         $(".image-upload-div").each(function(){

@@ -1,5 +1,43 @@
-﻿***CHANGELOG***
+﻿CHANGELOG***
+Version 2.8 - 12 july 2019
+* Version 2.8.2 (13 july 2019) - Fix-issue with flatsome theme sliders.
+* Version 2.8.1 (12 july 2019) - Fix-Tooltip not working.
+* Added - Show more link if swatches number are greater than defined.
+* Fix   - Hide out of stock options on shop page.
+* Added - Slider for shop swatches if swatches number is higher than set value.
+* Fix   - Styling issues on term pages.  
+Version 2.7 - 16 june 2019
+* Version 2.7.11(16 june 2019)     Fix - Bug with admin options.
+* Version 2.7.10(17 may 2019)      Fix - Bug with direct variation link.
+                                   Add - Hooks to change custom size and shape.
+* Version 2.7.09(15 may 2019)      Fix - Bug with disable unavailable options.
+* Version 2.7.08(13 may 2019)      Add - attribute_name parameter to wcva_attribute_display_type hook.
+                                   Add - Hook to add extra <option></option> for global display type.
+* Version 2.7.07(21 april 2019)    Fix - Bug with colorpicker for hex typing. 
+* Version 2.7.06(21 april 2019)    Fix - Bug with global shop swatch attributes. 
+                                   Add - Added hooks to globally manage shop swatches.
+* Version 2.7.05(11 april 2019)    Add - Added span.wcva_attribute_sep class into variable.php
+* Version 2.7.04(21 march 2019)    Fix - Debug error related to direct variation link.
+* Version 2.7.03(15 february 2019) Fix - wooswatches filter widget title not changing in backend.
+                                   Fix - add class to attribute name on widget frontend.
+* Version 2.7.02(06 february 2019) Add - Option to change clear selection text.
+* Version 2.7.01 Fix - Issue with rowurlencode while using variation images as swatch images.
+* Version 2.7.01 Fix - Close iris color picker when focus is lost.
+* Fix - Bug with using variation images as swatch images.
+* Fix - Color picker issue with latest wordpress. 
+* Fix - Media Upload issue with latest wordpress.
+Version 2.6 - 25 october 2018
+* version: 2.6.03 - fix - restore available options on clear selection.
+* version 2.6.02 - removed woocommerce_after_add_to_cart_button hook from variable.php .
+* version 2.6.01 - Added option to hide unavailable options.
 Version 2.5 - 10 june 2018
+* version 2.5.9 - Fixed disable variation issue on clear selection.
+* version 2.5.8 - Fixed issue with previous update.
+* version 2.5.7 - Disable unavailable options on page load.
+* version 2.5.6 - Removed console log entries on single product page.
+* version 2.5.5 - Fixed bug related to hiding unavailable options.
+* version 2.5.4 - Fixed js error.
+* version 2.5.3 - Updated add-to-cart-variation.js
 * version 2.5.2 - Fixed malware warning.
 * version 2.5.1 - Removed //do_action( ‘woocommerce_before_add_to_cart_button’ );  from variable.php .
 * Added - Multiple images per variation.

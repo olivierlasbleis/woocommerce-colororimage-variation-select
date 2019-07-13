@@ -25,10 +25,14 @@ class wcva_direct_variation_link {
 	
 	public function wcva_get_ending_variation_values() {
 	 global $post, $pagenow;
-	 $product              = wc_get_product($post->ID);
+	 if (isset($post->ID)) {
+	 	$product              = wc_get_product($post->ID);
+		$product_type         = $product->get_type();
+	 }
 	 
 	 
-	 if (( 'post-new.php' != $pagenow ) && (is_product())) {
+	 
+	 if (( 'post-new.php' != $pagenow ) && (is_product()) && ( $product_type == 'variable' )) {
 		 $available_variations = $product->get_variation_attributes();
 	 }
 	 
@@ -47,9 +51,12 @@ class wcva_direct_variation_link {
    
     public function wcva_get_variation_default_values( $attribute_options,$selected_attributes ) {
 	 global $post, $pagenow;
-     $product              = wc_get_product($post->ID);
+	 if (isset($post->ID)) {
+       $product              = wc_get_product($post->ID);
+	   $product_type         = $product->get_type();
+     }
 	 
-	 if (( 'post-new.php' != $pagenow ) && (is_product())) {
+	 if (( 'post-new.php' != $pagenow ) && (is_product()) && ( $product_type == 'variable' )) {
 	  $product_attributes = $product->get_variation_attributes();
 	 }
 	 $_GET_lower         = array_change_key_case($_GET, CASE_LOWER);

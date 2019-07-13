@@ -162,12 +162,14 @@
 		     <option value="big" <?php if (isset($_coloredvariables[$key]['size']) && ($_coloredvariables[$key]['size'] == 'big')) { echo 'selected'; }?>><span class="wcvaformfield"><?php echo __('Big (60px * 60px)','wcva'); ?></span></option>
 		     <option value="extrabig" <?php if (isset($_coloredvariables[$key]['size']) && ($_coloredvariables[$key]['size'] == 'extrabig')) { echo 'selected'; }?>><span class="wcvaformfield"><?php echo __('Extra Big (90px * 90px)','wcva'); ?></span></option>
 			 <option value="custom" <?php if (isset($_coloredvariables[$key]['size']) && ($_coloredvariables[$key]['size'] == 'custom')) { echo 'selected'; }?>><span class="wcvaformfield"><?php echo __('Custom','wcva'); ?></span></option>
-		    </select>
+		     <?php echo apply_filters('wcva_custom_attribute_display_size', $key ); ?>
+			</select>
 			
 		    <select name="coloredvariables[<?php echo $key; ?>][displaytype]">
 	         <option value="square" <?php if (isset($_coloredvariables[$key]['displaytype']) && ($_coloredvariables[$key]['displaytype'] == 'square')) { echo 'selected'; }?>><span class="wcvaformfield"><?php echo __('Square','wcva'); ?></span></option>
 		     <option value="round" <?php if (isset($_coloredvariables[$key]['displaytype']) && ($_coloredvariables[$key]['displaytype'] == 'round')) { echo 'selected'; }?>><span class="wcvaformfield"><?php echo __('Round','wcva'); ?></span></option>
-		    </select>
+		     <?php echo apply_filters('wcva_custom_attribute_display_displaytype', $key ); ?>
+			</select>
 		    <img class="help_tip wcva_help_tip" data-tip='<?php echo __('These fields does not apply to shop/archive swatches.To change swatch size on archive/shop pages visit products/display tab under woocommerce->settings.If you chose custom as display type, make sure you have defined custom swatches height,width into woocommerce/settings/swatches. ','wcva'); ?>' src="<?php echo $helpimg; ?>" height="16" width="16">
 		 </p>
 		 
@@ -212,11 +214,11 @@
 									   
                           if ( $term->slug != $value  ) continue; { 
 										$valuetitle                 = $term->name;
-										$globalthumbnail_id 	    = absint( get_woocommerce_term_meta( $term->term_id, 'thumbnail_id', true ) );
-										$hoverglobalimage 	        = absint( get_woocommerce_term_meta( $term->term_id, 'hoverimage', true ) );
-		                                $globaldisplay_type 	    = get_woocommerce_term_meta($term->term_id, 'display_type', true );
-		                                $globalcolor 	            = get_woocommerce_term_meta($term->term_id, 'color', true );
-										$globaltextblock 	        = get_woocommerce_term_meta($term->term_id, 'textblock', true );
+										$globalthumbnail_id 	    = absint( get_term_meta( $term->term_id, 'thumbnail_id', true ) );
+										$hoverglobalimage 	        = absint( get_term_meta( $term->term_id, 'hoverimage', true ) );
+		                                $globaldisplay_type 	    = get_term_meta($term->term_id, 'display_type', true );
+		                                $globalcolor 	            = get_term_meta($term->term_id, 'color', true );
+										$globaltextblock 	        = get_term_meta($term->term_id, 'textblock', true );
 									 }
 			         }					   
 		            }			  
@@ -297,13 +299,13 @@
                     switch($attrdisplaytype) {
 	                   case "Color":
 	                     ?>
-	                    <a class="imagediv_<?php echo $attrnumber; ?>_<?php echo $attrsubnumber; ?>" style="<?php if ($displaytype == "round") { echo '-moz-border-radius: 99em; -webkit-border-radius: 99em;'; } ?> display: inline-block; background-color: <?php if (isset($attrcolor)) { echo  $attrcolor; } else { echo 'grey'; } ?>;height: 22px;width: 22px; border: solid 2px white; <?php if ($displaytype != "round") { echo 'outline: solid 1px #9C9999;'; } ?>"></a>                                                              
+	                    <a class="imagediv_<?php echo $attrnumber; ?>_<?php echo $attrsubnumber; ?> wcva-heading-color" style="<?php if ($displaytype == "round") { echo '-moz-border-radius: 99em; -webkit-border-radius: 99em;'; } ?> display: inline-block; background-color: <?php if (isset($attrcolor)) { echo  $attrcolor; } else { echo 'grey'; } ?>;height: 22px;width: 22px; border: solid 2px white; <?php if ($displaytype != "round") { echo 'outline: solid 1px #9C9999;'; } ?>"></a>                                                              
 	                    <?php
 	                   break;
 					   
 	                   case "Image":
 	                     ?>
-	                     <a class="imagediv_<?php echo $attrnumber; ?>_<?php echo $attrsubnumber; ?>" style="<?php if ($displaytype == "round") { echo '-moz-border-radius: 99em; -webkit-border-radius: 99em; '; } ?>"><img src="<?php if (isset($swatchurl)) { echo $swatchurl; } ?>" width="22px" height="22px" style="<?php if ($displaytype == "round") { echo '-moz-border-radius: 99em; -webkit-border-radius: 99em;'; } ?> border: solid 2px white; <?php if ($displaytype != "round") { echo 'outline: solid 1px #9C9999;'; } ?>"></a>
+	                     <a class="imagediv_<?php echo $attrnumber; ?>_<?php echo $attrsubnumber; ?> wcva-heading-image" style="<?php if ($displaytype == "round") { echo '-moz-border-radius: 99em; -webkit-border-radius: 99em; '; } ?>"><img src="<?php if (isset($swatchurl)) { echo $swatchurl; } ?>" width="22px" height="22px" style="<?php if ($displaytype == "round") { echo '-moz-border-radius: 99em; -webkit-border-radius: 99em;'; } ?> border: solid 2px white; <?php if ($displaytype != "round") { echo 'outline: solid 1px #9C9999;'; } ?>"></a>
 	                     <?php
 	                   break;
 					   

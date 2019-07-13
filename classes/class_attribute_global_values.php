@@ -13,6 +13,7 @@ class wcva_global_values_per_attribute {
     public function wcva_register_scripts() {
 	   
 	   wp_register_script( 'wcva-term', ''.wcva_PLUGIN_URL.'js/wcva-term.js' );
+	   wp_register_style( 'wcva-term', ''.wcva_PLUGIN_URL.'css/wcva-term.css' );
 	   
 	   $translation_array = array( 
 		      'uploadimage'    => __( 'Choose an image' ,'wcva'),
@@ -46,6 +47,7 @@ class wcva_global_values_per_attribute {
 	 wp_enqueue_media(); 
 	 wp_enqueue_script('wp-color-picker');
      wp_enqueue_script( 'wcva-term' );
+     wp_enqueue_style( 'wcva-term' );
 	 wp_enqueue_style( 'wp-color-picker' );
 		?>
 	   
@@ -105,11 +107,11 @@ class wcva_global_values_per_attribute {
 	       wp_enqueue_style( 'wp-color-picker' );
 		
 		$image 			    = '';
-		$thumbnail_id 	    = absint( get_woocommerce_term_meta( $term->term_id, 'thumbnail_id', true ) );
-		$hoverimage 	    = absint( get_woocommerce_term_meta( $term->term_id, 'hoverimage', true ) );
-		$display_type 	    = get_woocommerce_term_meta( $term->term_id, 'display_type', true );
-		$color 	            = get_woocommerce_term_meta( $term->term_id, 'color', true );
-		$textblock 	        = get_woocommerce_term_meta( $term->term_id, 'textblock', true );
+		$thumbnail_id 	    = absint( get_term_meta( $term->term_id, 'thumbnail_id', true ) );
+		$hoverimage 	    = absint( get_term_meta( $term->term_id, 'hoverimage', true ) );
+		$display_type 	    = get_term_meta( $term->term_id, 'display_type', true );
+		$color 	            = get_term_meta( $term->term_id, 'color', true );
+		$textblock 	        = get_term_meta( $term->term_id, 'textblock', true );
 		
 		
 		
@@ -230,15 +232,15 @@ class wcva_global_values_per_attribute {
 		if ( $column == 'thumb' ) {
 
 			$image 			    = '';
-			$thumbnail_id 	    = get_woocommerce_term_meta( $id, 'thumbnail_id', true );
-			$color 	            = get_woocommerce_term_meta( $id, 'color', true );
-			$textblock 	        = get_woocommerce_term_meta( $id, 'textblock', true );
+			$thumbnail_id 	    = get_term_meta( $id, 'thumbnail_id', true );
+			$color 	            = get_term_meta( $id, 'color', true );
+			$textblock 	        = get_term_meta( $id, 'textblock', true );
 
 			if ($thumbnail_id)
 				$image = wp_get_attachment_thumb_url( $thumbnail_id );
 			else
 				$image          = wedd_placeholder_img_src();
-                $display_type 	= get_woocommerce_term_meta( $id, 'display_type', true );	
+                $display_type 	= get_term_meta( $id, 'display_type', true );	
 				
 				
 				if (isset($display_type)) :
@@ -248,7 +250,7 @@ class wcva_global_values_per_attribute {
 				  break;
 				
 				  case "Image":
-				   $columns .= '<div style="border: solid 2px white; outline: solid 1px #9C9999; width:32px; height:32px;"><img src="' . esc_url( $image ) . '" alt="Thumbnail" class="wp-post-image" height="32" width="32" /></div>';
+				   $columns .= '<div style="border: solid 2px white; outline: solid 1px #9C9999; width:32px; height:32px;"><img src="' . esc_url( $image ) . '" alt="Thumbnail" class="wp-post-image" /></div>';
 				  break;
 				
 				  case "textblock":
@@ -266,8 +268,8 @@ class wcva_global_values_per_attribute {
 		if ( $column == 'hoverimage' ) {
 
 			$image2 			    = '';
-			$thumbnail_id 	    = get_woocommerce_term_meta( $id, 'thumbnail_id', true );
-			$hoverimage 	    = get_woocommerce_term_meta( $id, 'hoverimage', true );
+			$thumbnail_id 	    = get_term_meta( $id, 'thumbnail_id', true );
+			$hoverimage 	    = get_term_meta( $id, 'hoverimage', true );
 			
 			if ($hoverimage) {
 				$image2 = wp_get_attachment_thumb_url( $hoverimage );
@@ -275,7 +277,7 @@ class wcva_global_values_per_attribute {
 				$image2          = wedd_placeholder_img_src();
 			}
 				
-			$columns .= '<div style="border: solid 2px white; outline: solid 1px #9C9999; width:32px; height:32px;"><img src="' . esc_url( $image2 ) . '" alt="Thumbnail" class="wp-post-image" height="32" width="32" /></div>';
+			$columns .= '<div style="border: solid 2px white; outline: solid 1px #9C9999; width:32px; height:32px;"><img src="' . esc_url( $image2 ) . '" alt="Thumbnail" class="wp-post-image" /></div>';
 		}
 
 		return $columns;

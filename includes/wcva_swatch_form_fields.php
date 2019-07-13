@@ -21,22 +21,37 @@ class wcva_swatch_form_fields {
 									
 									$terms = wc_get_product_terms( $productid, $name, array( 'fields' => 'all' ) );
 									
+									$count = count($terms);
 									
                                     foreach ( $terms as $term ) {
 									  
                                         if ( ! in_array( $term->slug, $options ) ) continue; { 
-										  
-										  $this->wcva_display_image_select_block1($selected_value,$name,$term,$_coloredvariables,$newvalues,$extra);
-									 }
+
+										    $this->wcva_display_image_select_block1($selected_value,$name,$term,$_coloredvariables,$newvalues,$extra);
+									    }
 									}
 									
                                 } else { 
+
+                                	$count = count($options);
 								        
                                     foreach ( $options as $option ) { 
-								          
-							              $this->wcva_display_image_select_block2($selected_value,$name,$option,$_coloredvariables,$newvalues,$extra);
-							      }
-							   }
+
+                                    	    $this->wcva_display_image_select_block2($selected_value,$name,$option,$_coloredvariables,$newvalues,$extra);
+							        
+							        }
+							    }
+						         
+
+						        
+						        $woocommerce_enable_shop_show_more = get_option('woocommerce_enable_shop_show_more');
+
+                                
+
+						        if (isset($woocommerce_enable_shop_show_more) && $woocommerce_enable_shop_show_more == "yes") {
+						        	$this->load_show_more_link($name,$count);
+						        }
+						         
 						    ?>
 							</div>
 							<?php
@@ -52,7 +67,7 @@ class wcva_swatch_form_fields {
 	  */
      public function wcva_load_colored_select2($product,$name,$options,$newvalues,$selected_value) {  
 	
-                            if ( is_array( $options ) ) {
+        if ( is_array( $options ) ) {
  
                            	?> 
 							<div class="attribute-swatch" attribute-index="">
@@ -63,23 +78,34 @@ class wcva_swatch_form_fields {
 									
 									$terms = wc_get_product_terms( $productid, $name, array( 'fields' => 'all' ) );
 									
-									
+									$count = count($terms);
+                                    
                                     foreach ( $terms as $term ) {
 									  
                                         if ( ! in_array( $term->slug, $options ) ) continue; { 
-										 
+
+
+										  
 										  $this->wcva_display_image_select_block3($selected_value,$name,$term,$newvalues);
-									 }
+									    }
+									
 									}
 									
                                 } 
+						    
+						        
+						        $woocommerce_enable_shop_show_more = get_option('woocommerce_enable_shop_show_more');
+						        
+						        if (isset($woocommerce_enable_shop_show_more) && $woocommerce_enable_shop_show_more == "yes") {
+						        	$this->load_show_more_link($name,$count);
+						        }
+						        
+						         
 						    ?>
 							</div>
 							<?php
-                            }
-
-
-	} 
+        }
+    } 
 	
 	 /*
 	  * Get Image display
@@ -97,10 +123,10 @@ class wcva_swatch_form_fields {
 			 foreach ($newvalues as $newvalue) {
 	               if (isset($newvalue->slug) && (strtolower($newvalue->slug) == strtolower($option->slug))) {
 		            
-		                   $globalthumbnail_id 	    = absint( get_woocommerce_term_meta( $newvalue->term_id, 'thumbnail_id', true ) );
-		                   $globaldisplay_type 	    = get_woocommerce_term_meta($newvalue->term_id, 'display_type', true );
-		                   $globalcolor 	        = get_woocommerce_term_meta($newvalue->term_id, 'color', true );
-						   $globaltextblock 	    = get_woocommerce_term_meta($newvalue->term_id, 'textblock', true );
+		                   $globalthumbnail_id 	    = absint( get_term_meta( $newvalue->term_id, 'thumbnail_id', true ) );
+		                   $globaldisplay_type 	    = get_term_meta($newvalue->term_id, 'display_type', true );
+		                   $globalcolor 	        = get_term_meta($newvalue->term_id, 'color', true );
+						   $globaltextblock 	    = get_term_meta($newvalue->term_id, 'textblock', true );
 		            }
 		     }
 			 
@@ -114,7 +140,7 @@ class wcva_swatch_form_fields {
                  $attributes = $variation['attributes'];
 				 
                   foreach ($attributes as $attribute=>$value) {
-                    if (($attribute == 'attribute_'.$name.'') && ($value == $option->slug)) {
+                    if ((rawurldecode($attribute) == 'attribute_'.$name.'') && ($value == $option->slug)) {
                       $url = $variation['image']['thumb_src'];
 					  
                     }
@@ -230,7 +256,7 @@ class wcva_swatch_form_fields {
 	                            case "Image":
 	                              ?>
 								  
-								  <label  selectid="<?php echo rawurldecode($labelid); ?>" class="attribute_<?php echo rawurldecode($labelid); ?>_<?php echo esc_attr( sanitize_title( $option->slug ) ); ?> <?php echo $labelclass; ?> <?php if ($displaytype == "round") { echo 'wcvaround'; } else { echo 'wcvasquare';} ?>" data-option="<?php echo esc_attr( sanitize_title( $option->slug ) ); ?>"  selectedtext="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" title="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" style="background-image:url(<?php if (isset($url)) { echo $url; } ?>);  width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px; "></label>
+								  <label  selectid="<?php echo rawurldecode($labelid); ?>"  class="wcva_image_label attribute_<?php echo rawurldecode($labelid); ?>_<?php echo esc_attr( sanitize_title( $option->slug ) ); ?> <?php echo $labelclass; ?> <?php if ($displaytype == "round") { echo 'wcvaround'; } else { echo 'wcvasquare';} ?>" data-option="<?php echo esc_attr( sanitize_title( $option->slug ) ); ?>"  selectedtext="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" title="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" style="--bg-image: url('<?php if (isset($url)) { echo $url; } ?>');  width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px; "></label>
 	                              <?php if (isset($showname) && ($showname == "yes")) { ?>
 								  <span style="width:<?php echo $spanwidth; ?>px;" class="belowtext"><?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?></span>
 								  <?php }
@@ -273,14 +299,16 @@ class wcva_swatch_form_fields {
 			foreach ($newvalues as $newvalue): 
 	               if (isset($newvalue->slug) && (strtolower($newvalue->slug) == strtolower($option))) : 
 		    
-		                   $globalthumbnail_id   	= absint( get_woocommerce_term_meta( $newvalue->term_id, 'thumbnail_id', true ) );
-		                   $globaldisplay_type 	    = get_woocommerce_term_meta($newvalue->term_id, 'display_type', true );
-		                   $globalcolor 	        = get_woocommerce_term_meta($newvalue->term_id, 'color', true );
-						   $globaltextblock 	    = get_woocommerce_term_meta($newvalue->term_id, 'textblock', true );
+		                   $globalthumbnail_id   	= absint( get_term_meta( $newvalue->term_id, 'thumbnail_id', true ) );
+		                   $globaldisplay_type 	    = get_term_meta($newvalue->term_id, 'display_type', true );
+		                   $globalcolor 	        = get_term_meta($newvalue->term_id, 'color', true );
+						   $globaltextblock 	    = get_term_meta($newvalue->term_id, 'textblock', true );
 						   
 		            endif; 
 			 
 			endforeach; 
+
+			
 	         
 			if (isset($extra['display_type']) && $extra['display_type']== "variationimage") {  
 			    global $product;
@@ -291,11 +319,17 @@ class wcva_swatch_form_fields {
  
                  $attributes = $variation['attributes'];
 				 
-                  foreach ($attributes as $attribute=>$value) {
-                    if (($attribute == 'attribute_'.$name.'') && ($value == $option->slug)) {
+
+                  
+                  foreach ($attributes as $attribute => $value) {
+
+                  	
+                    if ((rawurldecode($attribute) == 'attribute_'.$name.'') && ($value == $option)) {
+                      
                       $url = $variation['image']['thumb_src'];
 					  
                     }
+                    
                   }
                 }
 				
@@ -313,10 +347,13 @@ class wcva_swatch_form_fields {
 				 $url = wp_get_attachment_thumb_url( $globalthumbnail_id );
 				  
 		     }
+
+
+
 		  
 		     if (isset($extra['display_type']) && $extra['display_type']== "variationimage") {
 				 
-				 $attrdisplaytype  = "image";
+				 $attrdisplaytype  = "Image";
 			 
 			 } elseif ((isset($_coloredvariables[$name]['values'])) && (isset($_coloredvariables[$name]['values'][$option]['type']))) {
 	              
@@ -362,6 +399,8 @@ class wcva_swatch_form_fields {
 							  $url              = apply_filters('wcva_attribute_swatch_image', $url, $name , $option );
 							  $attrdisplaytype  = apply_filters('wcva_attribute_swatch_display_type', $attrdisplaytype );
 							  $spanwidth        = $imagewidth + 6;
+
+							 
 	
 	?>          <div class="swatchinput">
 	            
@@ -380,7 +419,7 @@ class wcva_swatch_form_fields {
 								
 	                            case "Image":
 	                              ?>
-								  <label  selectid="<?php echo rawurldecode($labelid); ?>" class="attribute_<?php echo rawurldecode($labelid); ?>_<?php echo esc_attr( $option  ); ?> <?php echo $labelclass; ?> <?php if ($displaytype == "round") { echo 'wcvaround'; } else { echo 'wcvasquare';} ?>" data-option="<?php echo esc_attr( $option  ); ?>" selectedtext="<?php echo rawurldecode($option); ?>" title="<?php echo rawurldecode($option); ?>" style="background-image:url(<?php if (isset($url)) { echo $url; } ?>);  width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px; "></label>
+								  <label  selectid="<?php echo rawurldecode($labelid); ?>"  class="wcva_image_label attribute_<?php echo rawurldecode($labelid); ?>_<?php echo esc_attr( $option  ); ?> <?php echo $labelclass; ?> <?php if ($displaytype == "round") { echo 'wcvaround'; } else { echo 'wcvasquare';} ?>" data-option="<?php echo esc_attr( $option  ); ?>" selectedtext="<?php echo rawurldecode($option); ?>" title="<?php echo rawurldecode($option); ?>" style="--bg-image: url('<?php if (isset($url)) { echo $url; } ?>'); width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px; "></label>
 	                              <?php if (isset($showname) && ($showname == "yes")) { ?>
 								  <span style="width:<?php echo $spanwidth; ?>px;" class="belowtext"><?php echo $option; ?></span>
 								  <?php }
@@ -424,10 +463,10 @@ class wcva_swatch_form_fields {
 			 foreach ($newvalues as $newvalue) {
 	               if (isset($newvalue->slug) && (strtolower($newvalue->slug) == strtolower($option->slug))) {
 		            
-		                   $globalthumbnail_id 	    = absint( get_woocommerce_term_meta( $newvalue->term_id, 'thumbnail_id', true ) );
-		                   $globaldisplay_type 	    = get_woocommerce_term_meta($newvalue->term_id, 'display_type', true );
-		                   $globalcolor 	        = get_woocommerce_term_meta($newvalue->term_id, 'color', true );
-						   $globaltextblock 	    = get_woocommerce_term_meta($newvalue->term_id, 'textblock', true );
+		                   $globalthumbnail_id 	    = absint( get_term_meta( $newvalue->term_id, 'thumbnail_id', true ) );
+		                   $globaldisplay_type 	    = get_term_meta($newvalue->term_id, 'display_type', true );
+		                   $globalcolor 	        = get_term_meta($newvalue->term_id, 'color', true );
+						   $globaltextblock 	    = get_term_meta($newvalue->term_id, 'textblock', true );
 		            }
 		     }
 			 
@@ -500,7 +539,7 @@ class wcva_swatch_form_fields {
 	                            case "Image":
 	                              ?>
 								  
-								  <label  selectid="<?php echo rawurldecode($labelid); ?>" class="attribute_<?php echo rawurldecode($labelid); ?>_<?php echo esc_attr( sanitize_title( $option->slug ) ); ?> <?php echo $labelclass; ?> <?php if ($displaytype == "round") { echo 'wcvaround'; } else { echo 'wcvasquare';} ?>" data-option="<?php echo esc_attr( sanitize_title( $option->slug ) ); ?>"  selectedtext="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" title="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" style="background-image:url(<?php if (isset($url)) { echo $url; } ?>); width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px; "></label>
+								  <label  selectid="<?php echo rawurldecode($labelid); ?>"  class="wcva_image_label attribute_<?php echo rawurldecode($labelid); ?>_<?php echo esc_attr( sanitize_title( $option->slug ) ); ?> <?php echo $labelclass; ?> <?php if ($displaytype == "round") { echo 'wcvaround'; } else { echo 'wcvasquare';} ?>" data-option="<?php echo esc_attr( sanitize_title( $option->slug ) ); ?>"  selectedtext="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" title="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" style="--bg-image: url('<?php if (isset($url)) { echo $url; } ?>'); width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px; "></label>
 	                              <?php if (isset($showname) && ($showname == "yes")) { ?>
 								  <span style="width:<?php echo $spanwidth; ?>px;" class="belowtext"><?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?></span>
 								  <?php }
@@ -608,6 +647,21 @@ class wcva_swatch_form_fields {
 	 
 	   return $width;
 	 }
+
+
+
+	public function load_show_more_link($name,$count) {
+
+		$woocommerce_show_swatches_number  = get_option('woocommerce_show_swatches_number');
+		$woocommerce_show_more_text        = get_option('woocommerce_show_more_text');
+		$different_count                   = $count - $woocommerce_show_swatches_number;
+		$woocommerce_show_more_text        = preg_replace('/{remaining_count}/', $different_count, $woocommerce_show_more_text);
+        
+        ?>
+            <a attribute="<?php echo $name; ?>" show-number="<?php echo $woocommerce_show_swatches_number; ?>" class="wcva_show_more_link"><?php echo $woocommerce_show_more_text; ?></a>
+		<?php
+	
+	}
 }
 
 ?>

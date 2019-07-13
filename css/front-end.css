@@ -43,8 +43,7 @@ label.selectedswatch.wcvasquare {
             transition: all 100ms ease-in;
   
     border: solid 2px white !important;
-    
-	outline: solid 2px black !important;
+    outline: solid 3px black !important;
 
     line-height: 1.0000;
 
@@ -155,4 +154,34 @@ label.wcvadisabled {
 	cursor: not-allowed;
 	opacity: 0.4;
 }
+
+label.wcvaoutofstock {
+    cursor: allowed;
+    opacity: 0.4;
+    background-image: url(../images/crossout.png);
+    background-position: center center;
+    background-size: 100% 100%;
+}
+
+label.wcva_image_label {
+    
+    background-image: var(--bg-image);
+    
+}
+
+label.wcva_image_label.wcvaoutofstock {
+    
+    background-image: url(../images/crossout.png);
+
+}
+
+.wcva_show_more_link {
+    display:none;
+}
+
+
+
+
+
+
 

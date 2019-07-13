@@ -19,9 +19,23 @@ $wcva_global_activation   =  get_option("wcva_woocommerce_global_activation");
 $wcva_global              =  get_option("wcva_global");
 $product_id               =  $product->get_id();
 $wcva_current_theme       =  wp_get_theme(); 	
-$wcva_show_selected       = get_option('woocommerce_show_selected_attribute_name');
+$wcva_show_selected       =  get_option('woocommerce_show_selected_attribute_name');
+$wcva_custom_clear_text   =  get_option('woocommerce_custom_clear_text');
+$variations               =  $product->get_available_variations();
 
-do_action( 'woocommerce_before_add_to_cart_form' ); ?>
+$outofstock_array         = array();
+
+foreach ($variations as $vkey => $variation) {
+	if ($variation['is_in_stock'] != 1) {
+		$outofstock_array[] = $variation['attributes'];
+	}
+}
+
+do_action( 'woocommerce_before_add_to_cart_form' ); 
+
+
+
+?>
 
 
 <form class="variations_form cart" method="post" enctype='multipart/form-data' data-product_id="<?php echo absint( $product_id ); ?>" data-product_variations="<?php echo esc_attr( json_encode( $available_variations ) ) ?>">
@@ -45,7 +59,7 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 					
 					
 					if (isset($attribute_display_type)) {
-						$attribute_display_type = apply_filters('wcva_attribute_display_type', $attribute_display_type );
+						$attribute_display_type = apply_filters('wcva_attribute_display_type', $attribute_display_type, $attribute_name );
 					}
 						
                         
@@ -57,9 +71,9 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 						
 							
 				    $taxonomies = array($attribute_name);
-	                              $args = array(
-                         'hide_empty' => 0
-                       );
+	                        $args = array(
+                               'hide_empty' => 0
+                            );
                     
 					$newvalues = get_terms( $taxonomies, $args);
 					
@@ -85,7 +99,7 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 						<td class="label">
 						  <span class="swatchtitlelabel"><?php if (isset($labeltext) && ($labeltext != '')) { echo $labeltext; } ?></span>
 						<?php if ($wcva_show_selected == "yes") { ?>
-						  : <span class="wcva_selected_attribute "><?php echo $selected_text; ?></span>
+						  <span class="wcva_attribute_sep">:</span> <span class="wcva_selected_attribute "><?php echo $selected_text; ?></span>
 						<?php } ?>
 						</td>
 					</tr>
@@ -149,7 +163,16 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 				
 			
 	
-			    <?php	//pricing fix for avada theme
+			    <?php	
+
+			     if (isset ($wcva_custom_clear_text) && ($wcva_custom_clear_text != '')) {
+			        $woocommerce_clear_text = $wcva_custom_clear_text;
+			     } else {
+			     	$woocommerce_clear_text = 'Clear selection';
+			     }
+
+			     //pricing fix for avada theme
+
 				 if (($wcva_current_theme == "Avada Child") || ($wcva_current_theme == "Avada")) { ?>
 				    <tr> 
 			          
@@ -158,7 +181,7 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 						<div class="single_variation_wrap">
 							<div class="single_variation"></div>
 						</div>
-						<?php echo end( $attribute_keys ) === $attribute_name ? '<a class="reset_variations" href="#">' . esc_html__( 'Clear selection', 'Avada' ) . '</a>' : ''; ?>
+						<?php echo end( $attribute_keys ) === $attribute_name ? '<a class="reset_variations" href="#">' . esc_html__( $woocommerce_clear_text, 'Avada' ) . '</a>' : ''; ?>
 						</div>	
 					   </td>
 					   <td></td>
@@ -166,8 +189,11 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 				  <?php } else { ?>
 				    <tr> 
   					
-					 <td><?php   
-						       echo end( $attribute_keys ) === $attribute_name ? '<a class="reset_variations" href="#">' . __( 'Clear selection', 'wcva' ) . '</a>' : ''; 
+					 <td><?php 
+					            if (isset($attribute_name)) {
+					           	   echo end( $attribute_keys ) === $attribute_name ? '<a class="reset_variations" href="#">' . __($woocommerce_clear_text, 'wcva' ) . '</a>' : ''; 
+					            }
+						       
 				         ?> 
 					 </td>
 					 <td></td>
@@ -200,10 +226,13 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 			?>
 		</div>
 
-		<?php do_action( 'woocommerce_after_add_to_cart_button' ); ?>
+		
 	<?php endif; ?>
 
 	<?php do_action( 'woocommerce_after_variations_form' ); ?>
 </form>
-
+<script>
+	var wcva_attribute_number = <?php echo count($attributes); ?>;
+	var outofstock_array      = <?php print_r(json_encode($outofstock_array)); ?>;
+</script>
 <?php do_action( 'woocommerce_after_add_to_cart_form' ); ?>

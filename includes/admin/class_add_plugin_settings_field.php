@@ -51,6 +51,24 @@ class WCVA_wcva_settings {
                 'id'       => 'wc_wcva_settings_section'
             ),
 
+
+            array(
+			              'name'     => __( 'Clear selection text', 'wcva' ),
+
+                          'desc_tip' => __( 'This will replace the custom Clear selection text.', 'wcva' ),
+
+                          'id'       => 'woocommerce_custom_clear_text',
+
+                          'type'     => 'text',
+
+                          'css'      => 'width:300px;',
+          
+                          'default'  => 'Clear selection' 
+
+                          
+                          
+            ),
+
 			
 			 array(
 			              'name'     => __( 'Product page custom swatches height', 'wcva' ),
@@ -85,19 +103,20 @@ class WCVA_wcva_settings {
                           
             ),
 			array(
-			              'name'     => __( 'Enable multiple variation images', 'wcva' ),
+			              'name'     => __( 'Enable tooltip on swatches', 'wcva' ),
 
-                          'id'       => 'woocommerce_wcva_multiple_variation_images',
+                          'id'       => 'woocommerce_wcva_swatch_tooltip',
 
                           'type'     => 'checkbox',
           
                           'default'  => 'no'
                           
             ),
+			
 			array(
-			              'name'     => __( 'Enable tooltip on swatches', 'wcva' ),
+			              'name'     => __( 'Disable tooltip on iOS devices', 'wcva' ),
 
-                          'id'       => 'woocommerce_wcva_swatch_tooltip',
+                          'id'       => 'woocommerce_wcva_disableios_tooltip',
 
                           'type'     => 'checkbox',
           
@@ -114,17 +133,72 @@ class WCVA_wcva_settings {
                           'default'  => 'yes'
                           
             ),
-			
-			array(
-			              'name'     => __( 'Disable tooltip on iOS devices', 'wcva' ),
+             array(
+			              'name'     => __( 'Enable shop swatches slider', 'wcva' ),
 
-                          'id'       => 'woocommerce_wcva_disableios_tooltip',
+                          'id'       => 'woocommerce_enable_shop_slider',
 
                           'type'     => 'checkbox',
           
-                          'default'  => 'no'
+                          'default'  => 'yes'
                           
             ),
+
+            array(
+			              'name'     => __( 'Number of swatches to show in shop slider', 'wcva' ),
+
+                          'id'       => 'woocommerce_shop_slider_number',
+
+                          'type'     => 'number',
+
+                          'css'      => 'width:60px;',
+          
+                          'default'  => '4'
+                          
+            ),
+
+            array(
+			              'name'     => __( 'Limit display of number of swatches on single product page', 'wcva' ),
+
+                          'id'       => 'woocommerce_enable_shop_show_more',
+
+                          'type'     => 'checkbox',
+          
+                          'default'  => 'yes',
+
+                          'desc_tip' => __( 'Check this if you have lot of options for attribute and you only want to show some them while there will a show more link which shows all options.', 'wcva' ),
+                          
+            ),
+
+            array(
+			              'name'     => __( 'Number of swatches to show', 'wcva' ),
+
+                          'id'       => 'woocommerce_show_swatches_number',
+
+                          'type'     => 'number',
+
+                          'css'      => 'width:60px;',
+          
+                          'default'  => '5'
+                          
+            ),
+
+            array(
+			              'name'     => __( 'Show more text', 'wcva' ),
+
+                          'id'       => 'woocommerce_show_more_text',
+
+                          'type'     => 'text',
+
+                          'css'      => 'width:300px;',
+          
+                          'default'  => '+ {remaining_count} more', 
+
+                          'desc_tip' => __( '{remaining_count} - number of swatches that will show upon clicking show more button.', 'wcva' ),
+                          
+            ),
+			
+			
 			
 
 			
@@ -173,8 +247,9 @@ class WCVA_wcva_settings {
 					       'default'  => '01',
 					       'type'     => 'select',
 					       'options'  => array(
-						      '01'        => __( 'Default - do not disable unavailable options', 'wcva' ),
+						      '01'        => __( 'Default - do not disable or hide unavailable options', 'wcva' ),
 							  '02'        => __( 'Disable unavailable options', 'wcva' ),
+							  '03'        => __( 'Hide unavailable options', 'wcva' )
 						    ),
 					        
                           
@@ -306,7 +381,8 @@ function wcva_global_settings() {
 									 <select name="wcva_global[pa_<?php echo $attribute_name; ?>][display_type]">
 	                                     <option value="none"><span class="wcvaformfield"><?php echo __('Dropdown Select','wcva'); ?></span></option>
 		                                 <option value="colororimage" <?php if ((isset($wcva_global[$global_attribute_name]['display_type'])) && ($wcva_global[$global_attribute_name]['display_type'] == "colororimage")) {echo "selected";} ?>><span class="wcvaformfield"><?php echo __('Color or Image','wcva'); ?></span></option>
-	                                 </select>
+	                                     <?php echo apply_filters('wcva_global_attribute_display_type', $global_attribute_name ); ?>
+									 </select>
 								</td>
 								<td width="40%">
 								    <select name="wcva_global[pa_<?php echo $attribute_name; ?>][size]">
@@ -321,13 +397,16 @@ function wcva_global_settings() {
 									  <option value="extrabig" <?php if ((isset($wcva_global[$global_attribute_name]['size'])) && ($wcva_global[$global_attribute_name]['size'] == "extrabig")) {echo "selected";} ?>><span class="wcvaformfield"><?php echo __('Extra Big (90px * 90px)','wcva'); ?></span></option>
 			                          
 									  <option value="custom" <?php if ((isset($wcva_global[$global_attribute_name]['size'])) && ($wcva_global[$global_attribute_name]['size'] == "custom")) {echo "selected";} ?>><span class="wcvaformfield"><?php echo __('Custom','wcva'); ?></span></option>
-		                             </select>
+		                              <?php echo apply_filters('wcva_global_attribute_display_size', $global_attribute_name ); ?>
+									 </select>
 									 <select name="wcva_global[pa_<?php echo $attribute_name; ?>][displaytype]">
 									 
 	                                   <option value="square" <?php if ((isset($wcva_global[$global_attribute_name]['displaytype'])) && ($wcva_global[$global_attribute_name]['displaytype'] == "square")) {echo "selected";} ?>><span class="wcvaformfield"><?php echo __('Square','wcva'); ?></span></option>
 									   
 		                               <option value="round" <?php if ((isset($wcva_global[$global_attribute_name]['displaytype'])) && ($wcva_global[$global_attribute_name]['displaytype'] == "round")) {echo "selected";} ?>><span class="wcvaformfield"><?php echo __('Round','wcva'); ?></span></option>
-		                              </select>
+		                                
+									   <?php echo apply_filters('wcva_global_attribute_display_displaytype', $global_attribute_name ); ?>
+									  </select>
 								</td>
 								<td>
 								   <select name="wcva_global[pa_<?php echo $attribute_name; ?>][show_name]" class="wcvadisplaytype">

@@ -22,9 +22,14 @@ class wcva_register_style_scripts {
 		}
         
        if (isset($wcva_swatch_behaviour)	&& ($wcva_swatch_behaviour == "02")) {
-		      $wcva_disable_options="yes";
+		      $wcva_disable_options = "yes";
+		      $wcva_hide_options    = "no";
+	   } elseif (isset($wcva_swatch_behaviour)	&& ($wcva_swatch_behaviour == "03")) {
+              $wcva_disable_options = "yes";
+              $wcva_hide_options    = "yes";
 	   } else {
-		      $wcva_disable_options="no";
+		      $wcva_disable_options ="no";
+		      $wcva_hide_options    ="no";
 	   }
 	   
 	   
@@ -70,6 +75,7 @@ class wcva_register_style_scripts {
 	   $wcva_localize = array(
 	    'tooltip'         => $woocommerce_wcva_swatch_tooltip,
 		'disable_options' => $wcva_disable_options,
+		'hide_options'    => $wcva_hide_options,
 		'show_attribute'  => $woocommerce_show_selected_attribute_name,
 		'quick_view'      => wcva_quick_view_mode
 	   );
