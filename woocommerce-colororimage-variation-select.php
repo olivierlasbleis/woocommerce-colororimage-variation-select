@@ -3,7 +3,7 @@
   Plugin Name: WooSwatches - Woocommerce Color or Image Variation Swatches
   Plugin URI: http://woomatrix.com
   Description: Convert variable select box into color or image select.
-  Version: 2.8.2
+  Version: 2.8.3
   Author: woomatrix
   Author URI: http://woomatrix.com
   Requires at least: 3.3

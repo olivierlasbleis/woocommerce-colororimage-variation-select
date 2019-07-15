@@ -54,13 +54,18 @@ class wcva_shop_page_swatches {
 		    	wp_enqueue_script( 'wcva-slick', ''.wcva_PLUGIN_URL.'js/slick.js' , array('jquery'));
 		    }
 
+		    $enable_hover_swap                = "no";
+            
+
+            $enable_hover_swap                = apply_filters('wcva_restore_product_image_on_mouseleave', $enable_hover_swap );
 		    
 		    
 		    $wcvi_locals = array(
 			  'left_icon'                      => ''.wcva_PLUGIN_URL.'images/left-arrow.png',
 			  'right_icon'                     => ''.wcva_PLUGIN_URL.'images/right-arrow.png',
 			  'enable_slider'                  => $woocommerce_enable_shop_slider,
-			  'slider_no'                      => $woocommerce_shop_slider_number
+			  'slider_no'                      => $woocommerce_shop_slider_number,
+			  'hover_swap'                     => $enable_hover_swap
 
 		    );
   
@@ -240,6 +245,8 @@ class wcva_shop_page_swatches {
 			$mobile_click      = get_option('woocommerce_wcva_disable_mobile_hover',"no");
 			$woocommerce_enable_shop_slider   = get_option('woocommerce_enable_shop_slider',"no");
             $woocommerce_shop_slider_number   = get_option('woocommerce_shop_slider_number',4);
+            $attachment_ids[0]     = get_post_thumbnail_id( $pid );
+            $defult_image          = wp_get_attachment_image_src($attachment_ids[0], $hover_image_size );
 
 			if (isset($woocommerce_enable_shop_slider) && ($woocommerce_enable_shop_slider == "yes") && ($swatch_count > $woocommerce_shop_slider_number)) {
                 $sliderclass                  =  'slider wcva-multiple-items';
@@ -261,7 +268,7 @@ class wcva_shop_page_swatches {
 			
 		
         ?>
-	<div class="shopswatchinput <?php echo $sliderclass; ?>" swatch-count="<?php echo $swatch_count; ?>" start-slider-count="<?php echo $woocommerce_shop_slider_number; ?>" prod-img="">
+	<div class="shopswatchinput <?php echo $sliderclass; ?>" swatch-count="<?php echo $swatch_count; ?>" start-slider-count="<?php echo $woocommerce_shop_slider_number; ?>" prod-img="<?php echo $defult_image[0]; ?>">
 	    <?php  
 		
 		$load_assets   = wcva_load_shop_page_assets();
@@ -385,6 +392,9 @@ class wcva_shop_page_swatches {
                 $slideclass                   =  '';
             }
 
+            $attachment_ids[0]     = get_post_thumbnail_id( $pid );
+            $defult_image          = wp_get_attachment_image_src($attachment_ids[0], $hover_image_size );
+
 
 			$display_shape     =  'wcvasquare';
 	   
@@ -400,7 +410,7 @@ class wcva_shop_page_swatches {
 			
 		
         ?>
-	<div class="shopswatchinput <?php echo $sliderclass; ?>" swatch-count="<?php echo $swatch_count; ?>" start-slider-count="<?php echo $woocommerce_shop_slider_number; ?>" prod-img="">
+	<div class="shopswatchinput <?php echo $sliderclass; ?>" swatch-count="<?php echo $swatch_count; ?>" start-slider-count="<?php echo $woocommerce_shop_slider_number; ?>" prod-img="<?php echo $defult_image[0];  ?>">
 	    <?php  
 		
 		$load_assets   = wcva_load_shop_page_assets();
