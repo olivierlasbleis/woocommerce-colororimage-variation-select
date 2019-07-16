@@ -1,5 +1,6 @@
 ﻿CHANGELOG***
 Version 2.8 - 12 july 2019
+* Version 2.8.4 (17 july 2019) - Fix- slick slider css conflict with elementor.
 * Version 2.8.3 (15 july 2019) - Added hook-wcva_restore_product_image_on_mouseleave.
 * Version 2.8.2 (13 july 2019) - Fix-issue with flatsome theme sliders.
 * Version 2.8.1 (12 july 2019) - Fix-Tooltip not working.
