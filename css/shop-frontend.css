@@ -238,15 +238,10 @@ a.multiple.slide.wcvaswatchinput {
 
    
 }
-
-
-
 .wcva-multiple-items {
     display:none;
 }
 
 
 
-.slick-slider>div:not(.col), .slick-slider>a, .slick-slider>p, .slick-slider>a>img, .slick-slider>img {
-    width: 75% !important;
-}
+
