@@ -259,23 +259,40 @@ class wcva_shop_page_swatches {
 	        require_once 'wcva_mobile_detect.php';
 	   
 	        $detect = new WCVA_Mobile_Detect;
-			
+			$class_type_swatch = '';
 			if (isset($mobile_click) && ($mobile_click == "yes") && ( $detect->isMobile() ) ) {
 			    $load_direct_variation = "no";
 			} else {
 				$load_direct_variation = "yes";
 			}
+			$load_assets   = wcva_load_shop_page_assets();
+      
+    
+	   
+        	if (isset($load_assets) && ($load_assets == "yes")) {
+		
+	        	foreach ($values as $key=>$value) { 
+					if ($main_display_type == "global") {
+					
+				            $swatchtype       = get_term_meta( $value['term_id'], 'display_type', true );
+				    
+				    } else {
+					        
+							$swatchtype       = $value['type'];
+				    }
+		        }
+		    }
 			
 		
         ?>
-	<div class="shopswatchinput <?php echo $sliderclass; ?>" swatch-count="<?php echo $swatch_count; ?>" start-slider-count="<?php echo $woocommerce_shop_slider_number; ?>" prod-img="<?php echo $defult_image[0]; ?>">
+	<div class="shopswatchinput <?php echo $sliderclass; ?> " swatch-count="<?php echo $swatch_count; ?>" start-slider-count="<?php echo $woocommerce_shop_slider_number; ?>" prod-img="<?php echo $defult_image[0]; ?>">
 	    <?php  
 		
 		$load_assets   = wcva_load_shop_page_assets();
       
     
 	   
-        if (isset($load_assets) && ($load_assets == "yes")) {
+        //if (isset($load_assets) && ($load_assets == "yes")) {
 		
 	        foreach ($values as $key=>$value) { 
 
@@ -311,18 +328,33 @@ class wcva_shop_page_swatches {
 			
 			
 
-                $swatchimageurl   =  apply_filters('wcva_swatch_image_url',wp_get_attachment_thumb_url($swatchimage),$swatchimage);
-			    $hoverimage       =  wp_get_attachment_image_src($hoverimage,$hover_image_size);
-                $hoverimageurl    =  apply_filters('wcva_hover_image_url',$hoverimage[0],$hoverimage[0]);
-			    
+               $swatchimageurl   =  apply_filters('wcva_swatch_image_url',wp_get_attachment_thumb_url($swatchimage),$swatchimage);
+			    global $product, $woocommerce_loop;
 
-                
-			    
-                
-			    
-			
-			
-			 
+			    if (isset($woocommerce_loop['show_custom_image']) && $woocommerce_loop['show_custom_image'] === 'yes') {
+		            $has_custom_size = false;
+		            $attachment_size[1] = '';
+		            if (!empty($woocommerce_loop['custom_dimension']['width'])) {
+		                $has_custom_size = true;
+		                $attachment_size[0] = $woocommerce_loop['custom_dimension']['width'];
+		            }
+
+		            if (!empty($woocommerce_loop['custom_dimension']['height'])) {
+		                $has_custom_size = true;
+		                $attachment_size[1] = $woocommerce_loop['custom_dimension']['height'];
+		            }
+		            $hoverimagefull       =  wp_get_attachment_image_src($hoverimage,'full');
+                    $hoverimageurl = Lusion_Helper::aq_resize(array(
+                        'url' => $hoverimagefull[0],
+                        'width' => $attachment_size[0],
+                        'height' => $attachment_size[1],
+                        'crop' => true,
+                    ));
+		        }else{
+		        	$hoverimage       =  wp_get_attachment_image_src($hoverimage,$hover_image_size);
+		        	$hoverimageurl    =  apply_filters('wcva_hover_image_url',$hoverimage[0],$hoverimage[0]);
+		        }
+
 			    if (isset($swatchtype)) {
 				    switch ($swatchtype) {
              	        case 'Color':
@@ -336,7 +368,7 @@ class wcva_shop_page_swatches {
              	        case 'Image':
              		        ?>
                             <a <?php if ((isset($direct_link)) && ($direct_link == "yes") && ( $load_direct_variation == "yes" )) { ?> href="<?php echo $direct_url; ?>" <?php } ?> class="<?php echo $slideclass; ?> wcvaswatchinput" data-o-src="<?php if (isset($hoverimageurl)) { echo $hoverimageurl; } ?>" >
-                            <div class="wcvashopswatchlabel <?php echo $display_shape; ?>"  style="background-image:url(<?php if (isset($swatchimageurl)) { echo $swatchimageurl; } ?>); background-size: <?php echo $imagewidth-2; ?>px <?php echo $imageheight-2; ?>px; float:left; width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px;"></div>
+                            <div class="wcvashopswatchlabel <?php echo $display_shape; ?>" style="background-image:url(<?php if (isset($woocommerce_loop['show_custom_image']) && $woocommerce_loop['show_custom_image'] === 'yes') {if (isset($hoverimageurl)) { echo $hoverimageurl; }}else{if (isset($swatchimageurl)) { echo $swatchimageurl; }}?>); background-size: <?php echo $imagewidth-2; ?>px <?php echo $imageheight-2; ?>px; float:left; width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px;"></div>
                             </a>
              		        <?php
              		    break;
@@ -355,7 +387,7 @@ class wcva_shop_page_swatches {
 			 
             
             }
-		}		?>
+		/*}*/		?>
 	</div>
 	     
 	<?php 
@@ -427,7 +459,7 @@ class wcva_shop_page_swatches {
 	        $attributes = $product->get_variation_attributes(); 
 		} 
 	    
-        if (isset($load_assets) && ($load_assets == "yes")) {
+        //if (isset($load_assets) && ($load_assets == "yes")) {
 		
 	        foreach ($attributes as $key=>$value) { 
                 
@@ -474,21 +506,40 @@ class wcva_shop_page_swatches {
 		             }
 					 
 					 
-					 
-					 
-					if (isset($swatchimage)) {
+					global $product, $woocommerce_loop;
+
+				    if (isset($woocommerce_loop['show_custom_image']) && $woocommerce_loop['show_custom_image'] === 'yes') {
+			            $has_custom_size = false;
+			            $attachment_size[1] = '';
+			            if (!empty($woocommerce_loop['custom_dimension']['width'])) {
+			                $has_custom_size = true;
+			                $attachment_size[0] = $woocommerce_loop['custom_dimension']['width'];
+			            }
+
+			            if (!empty($woocommerce_loop['custom_dimension']['height'])) {
+			                $has_custom_size = true;
+			                $attachment_size[1] = $woocommerce_loop['custom_dimension']['height'];
+			            }
+			            $hoverimagefull       =  wp_get_attachment_image_src($hoverimage,'full');
+	                    $hoverimageurl = Lusion_Helper::aq_resize(array(
+	                        'url' => $hoverimagefull[0],
+	                        'width' => $attachment_size[0],
+	                        'height' => $attachment_size[1],
+	                        'crop' => true,
+	                    ));
+			        }else{
+			        	if (isset($swatchimage)) {
 					
-                        $swatchimageurl   =  apply_filters('wcva_swatch_image_url',wp_get_attachment_thumb_url($swatchimage),$swatchimage);
-				    }
-				
-				    if (isset($hoverimage)) {
+	                        $swatchimageurl   =  apply_filters('wcva_swatch_image_url',wp_get_attachment_thumb_url($swatchimage),$swatchimage);
+					    }
 					
-			            $hoverimage       =  wp_get_attachment_image_src($hoverimage,$hover_image_size);
-                        $hoverimageurl    =  apply_filters('wcva_hover_image_url',$hoverimage[0],$hoverimage[0]);
+					    if (isset($hoverimage)) {
+						
+				            $hoverimage       =  wp_get_attachment_image_src($hoverimage,$hover_image_size);
+	                        $hoverimageurl    =  apply_filters('wcva_hover_image_url',$hoverimage[0],$hoverimage[0]);
+				        }
 			        }
-			
-			    
-			  
+
 			        if (isset($swatchtype)) {
 				      switch ($swatchtype) {
              	        case 'Color':
@@ -502,7 +553,7 @@ class wcva_shop_page_swatches {
              	        case 'Image':
              		        ?>
                             <a <?php if ((isset($direct_link)) && ($direct_link == "yes") && ( $load_direct_variation == "yes" )) { ?> href="<?php echo $direct_url; ?>" <?php } ?> class="<?php echo $slideclass; ?> wcvaswatchinput" data-o-src="<?php if (isset($hoverimageurl)) { echo $hoverimageurl; } ?>" >
-                            <div class="wcvashopswatchlabel <?php echo $display_shape; ?>"  style="background-image:url(<?php if (isset($swatchimageurl)) { echo $swatchimageurl; } ?>); background-size: <?php echo $imagewidth-2; ?>px <?php echo $imageheight-2; ?>px; float:left; width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px;"></div>
+                            <div class="wcvashopswatchlabel <?php echo $display_shape; ?>" style="background-image:url(<?php if (isset($woocommerce_loop['show_custom_image']) && $woocommerce_loop['show_custom_image'] === 'yes') {if (isset($hoverimageurl)) { echo $hoverimageurl; }}else{if (isset($swatchimageurl)) { echo $swatchimageurl; }}?>); background-size: <?php echo $imagewidth-2; ?>px <?php echo $imageheight-2; ?>px; float:left; width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px;"></div>
                             </a>
              		        <?php
              		    break;
@@ -527,7 +578,7 @@ class wcva_shop_page_swatches {
                 					 
             
             }
-		}		?>
+		/*}*/		?>
 	</div>
 	     
 	<?php 

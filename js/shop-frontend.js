@@ -10,8 +10,8 @@
               
 
                if (hoverimage) {
-                 $(this).closest('.product').find("img.attachment-woocommerce_thumbnail").attr("src",hoverimage);
-				         $(this).closest('.product').find("img.attachment-woocommerce_thumbnail").attr("srcset",hoverimage);
+                 $(this).closest('.product').find(".img-first img.attachment-woocommerce_thumbnail").attr("src",hoverimage);
+				         $(this).closest('.product').find(".img-first img.attachment-woocommerce_thumbnail").attr("srcset",hoverimage);
                  
                }
 
@@ -34,8 +34,8 @@
               var parentdiv      = $(this).closest('div.shopswatchinput');
               var default_value  = $(parentdiv).attr("prod-img");
 
-              $(this).closest('.product').find("img.attachment-woocommerce_thumbnail").attr("src",default_value);
-              $(this).closest('.product').find("img.attachment-woocommerce_thumbnail").attr("srcset",default_value);
+              $(this).closest('.product').find(".img-first img.attachment-woocommerce_thumbnail").attr("src",default_value);
+              $(this).closest('.product').find(".img-first img.attachment-woocommerce_thumbnail").attr("srcset",default_value);
            
               return false;
           }); 

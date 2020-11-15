@@ -1,5 +1,11 @@
 ﻿CHANGELOG***
-Version 2.8 - 23 july 2019
+Version 3.0 - 15 august 2020
+* Fix - Jquery conflict on product edit page. 
+* Fix - Jquery conflict on wooswatches settings page.
+* Enhancement - Replaced background-image with --bg-image on swatch output.
+Version 2.8 - 22 november 2019
+* Version 2.8.7 (22 november 2019) - Fix- debug error on attribute edit page.
+* Version 2.8.6 (19 september 2019) - Fix- update_woocommerce_term_meta replaced with update_term_meta.
 * Version 2.8.5 (23 july 2019) - Fix- slick slider js conflict in shop-frontend.js.
 * Version 2.8.4 (17 july 2019) - Fix- slick slider css conflict with elementor.
 * Version 2.8.3 (15 july 2019) - Added hook-wcva_restore_product_image_on_mouseleave.

@@ -15,7 +15,7 @@
 
 
         $(function() {
-          $('.wcvadisplaytype').live('change',function(){
+          $('.wcvadisplaytype').on('change',function(){
            zvalue= $(this).val();
 	      if (zvalue == "colororimage") {
 			  

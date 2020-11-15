@@ -199,19 +199,19 @@ class wcva_global_values_per_attribute {
 		
 
 		if ( isset( $_POST['thumbnail_id'] ) )
-			update_woocommerce_term_meta( $term_id, 'thumbnail_id', absint( $_POST['thumbnail_id'] ) );
+			update_term_meta( $term_id, 'thumbnail_id', absint( $_POST['thumbnail_id'] ) );
 		
 		if ( isset( $_POST['hoverimage'] ) )
-			update_woocommerce_term_meta( $term_id, 'hoverimage', absint( $_POST['hoverimage'] ) );
+			update_term_meta( $term_id, 'hoverimage', absint( $_POST['hoverimage'] ) );
 			
 		if ( isset( $_POST['display_type'] ) )
-			update_woocommerce_term_meta( $term_id, 'display_type',  $_POST['display_type'] );
+			update_term_meta( $term_id, 'display_type',  $_POST['display_type'] );
 		
 		if ( isset( $_POST['color'] ) )
-			update_woocommerce_term_meta( $term_id, 'color',  $_POST['color'] );
+			update_term_meta( $term_id, 'color',  $_POST['color'] );
 		
 		if ( isset( $_POST['textblock'] ) )
-			update_woocommerce_term_meta( $term_id, 'textblock',  $_POST['textblock'] );
+			update_term_meta( $term_id, 'textblock',  $_POST['textblock'] );
 
 		delete_transient( 'wc_term_counts' );
 	}

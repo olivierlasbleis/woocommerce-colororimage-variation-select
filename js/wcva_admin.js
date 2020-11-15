@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 
 $(function() {
 
-    $('#wcva_woocommerce_global_activation').live('change',function(){
+    $('#wcva_woocommerce_global_activation').on('change',function(){
 
         if ($(this).prop('checked')) {
              $(this).closest("tr").next().show(200);
@@ -47,7 +47,7 @@ $(function() {
 
     second_next_to_shop_more.hide();
     
-    $('#woocommerce_enable_shop_show_more').live('change',function() {
+    $('#woocommerce_enable_shop_show_more').on('change',function() {
     
         if( $(this).is(':checked')) {
            next_tr_to_shop_more.show();

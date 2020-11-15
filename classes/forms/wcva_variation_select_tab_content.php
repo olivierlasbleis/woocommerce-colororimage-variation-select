@@ -278,7 +278,7 @@
 			   
 			  if (isset($swatchimage)) {
 				  $swatchurl     = wp_get_attachment_thumb_url( $swatchimage );
-			  }
+			  } 
 			  
 			  if (isset($hoverthumb_id)) {
 				  $hoverurl      = wp_get_attachment_thumb_url( $hoverthumb_id ); 

@@ -256,7 +256,7 @@ class wcva_swatch_form_fields {
 	                            case "Image":
 	                              ?>
 								  
-								  <label  selectid="<?php echo rawurldecode($labelid); ?>"  class="wcva_image_label attribute_<?php echo rawurldecode($labelid); ?>_<?php echo esc_attr( sanitize_title( $option->slug ) ); ?> <?php echo $labelclass; ?> <?php if ($displaytype == "round") { echo 'wcvaround'; } else { echo 'wcvasquare';} ?>" data-option="<?php echo esc_attr( sanitize_title( $option->slug ) ); ?>"  selectedtext="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" title="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" style="--bg-image: url('<?php if (isset($url)) { echo $url; } ?>');  width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px; "></label>
+								  <label  selectid="<?php echo rawurldecode($labelid); ?>"  class="wcva_image_label attribute_<?php echo rawurldecode($labelid); ?>_<?php echo esc_attr( sanitize_title( $option->slug ) ); ?> <?php echo $labelclass; ?> <?php if ($displaytype == "round") { echo 'wcvaround'; } else { echo 'wcvasquare';} ?>" data-option="<?php echo esc_attr( sanitize_title( $option->slug ) ); ?>"  selectedtext="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" title="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" style="background-image: url('<?php if (isset($url)) { echo $url; } ?>');  width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px; "></label>
 	                              <?php if (isset($showname) && ($showname == "yes")) { ?>
 								  <span style="width:<?php echo $spanwidth; ?>px;" class="belowtext"><?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?></span>
 								  <?php }
@@ -419,7 +419,7 @@ class wcva_swatch_form_fields {
 								
 	                            case "Image":
 	                              ?>
-								  <label  selectid="<?php echo rawurldecode($labelid); ?>"  class="wcva_image_label attribute_<?php echo rawurldecode($labelid); ?>_<?php echo esc_attr( $option  ); ?> <?php echo $labelclass; ?> <?php if ($displaytype == "round") { echo 'wcvaround'; } else { echo 'wcvasquare';} ?>" data-option="<?php echo esc_attr( $option  ); ?>" selectedtext="<?php echo rawurldecode($option); ?>" title="<?php echo rawurldecode($option); ?>" style="--bg-image: url('<?php if (isset($url)) { echo $url; } ?>'); width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px; "></label>
+								  <label  selectid="<?php echo rawurldecode($labelid); ?>"  class="wcva_image_label attribute_<?php echo rawurldecode($labelid); ?>_<?php echo esc_attr( $option  ); ?> <?php echo $labelclass; ?> <?php if ($displaytype == "round") { echo 'wcvaround'; } else { echo 'wcvasquare';} ?>" data-option="<?php echo esc_attr( $option  ); ?>" selectedtext="<?php echo rawurldecode($option); ?>" title="<?php echo rawurldecode($option); ?>" style="background-image: url('<?php if (isset($url)) { echo $url; } ?>'); width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px; "></label>
 	                              <?php if (isset($showname) && ($showname == "yes")) { ?>
 								  <span style="width:<?php echo $spanwidth; ?>px;" class="belowtext"><?php echo $option; ?></span>
 								  <?php }
@@ -539,7 +539,7 @@ class wcva_swatch_form_fields {
 	                            case "Image":
 	                              ?>
 								  
-								  <label  selectid="<?php echo rawurldecode($labelid); ?>"  class="wcva_image_label attribute_<?php echo rawurldecode($labelid); ?>_<?php echo esc_attr( sanitize_title( $option->slug ) ); ?> <?php echo $labelclass; ?> <?php if ($displaytype == "round") { echo 'wcvaround'; } else { echo 'wcvasquare';} ?>" data-option="<?php echo esc_attr( sanitize_title( $option->slug ) ); ?>"  selectedtext="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" title="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" style="--bg-image: url('<?php if (isset($url)) { echo $url; } ?>'); width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px; "></label>
+								  <label  selectid="<?php echo rawurldecode($labelid); ?>"  class="wcva_image_label attribute_<?php echo rawurldecode($labelid); ?>_<?php echo esc_attr( sanitize_title( $option->slug ) ); ?> <?php echo $labelclass; ?> <?php if ($displaytype == "round") { echo 'wcvaround'; } else { echo 'wcvasquare';} ?>" data-option="<?php echo esc_attr( sanitize_title( $option->slug ) ); ?>"  selectedtext="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" title="<?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?>" style="background-image: url('<?php if (isset($url)) { echo $url; } ?>'); width:<?php echo $imagewidth; ?>px; height:<?php echo $imageheight; ?>px; "></label>
 	                              <?php if (isset($showname) && ($showname == "yes")) { ?>
 								  <span style="width:<?php echo $spanwidth; ?>px;" class="belowtext"><?php echo apply_filters( 'woocommerce_variation_option_name', $option->name ); ?></span>
 								  <?php }
